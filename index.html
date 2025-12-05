@@ -1,263 +1,254 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🏆 Istadental Satış Yarışması 🏆</title>
-    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>🏆 Istadental Satış Yarışması</title>
 
-    <style>
-        /* (— SENİN TÜM CSS’İN HİÇ DEĞİŞMEDEN BIRAKILDI —) */
-        :root {
-            --bg-dark: #0a0a0a;
-            --card-glass: rgba(255, 255, 255, 0.03);
-            --gold: #FFD700;
-            --silver: #E0E0E0;
-            --bronze: #CD7F32;
-            --danger-red: #ff0000;
-            --neon-green: #00ff88;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background: radial-gradient(circle at center top, #1a1a2e 0%, #000000 80%);
-            font-family: 'Roboto', sans-serif;
-            color: #e0e0e0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-bottom: 50px;
-            overflow-x: hidden;
-        }
-        .header-section { text-align: center; margin: 30px 0 50px 0; }
-        .grand-prize {
-            font-family: 'Teko', sans-serif;
-            font-size: 6rem;
-            line-height: 1;
-            font-weight: 700;
-            background: linear-gradient(to bottom, #FFD700, #ffb300);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 25px rgba(255,215,0,0.4));
-        }
-        .company-title { font-size: 2rem; text-transform: uppercase; font-weight: 700; letter-spacing: 2px; }
-        .day-status {
-            font-size: 1rem;
-            color: #aaa;
-            margin-top: 5px;
-            background: rgba(255,255,255,0.08);
-            padding: 5px 15px;
-            border-radius: 20px;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Teko:wght@300;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-        .container { width: 90%; max-width: 1200px; display: flex; flex-direction: column; gap: 60px; }
+<style>
+:root{
+  --bg-dark:#0a0a0a; --card-glass:rgba(255,255,255,0.03);
+  --gold:#FFD700; --silver:#E0E0E0; --bronze:#CD7F32;
+  --danger-red:#ff0000; --neon-green:#00ff88;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  min-height:100vh;background:radial-gradient(circle at center top,#1a1a2e 0%,#000 80%);
+  color:#e0e0e0;font-family:Roboto,Arial;display:flex;flex-direction:column;align-items:center;
+  padding-bottom:50px;overflow-x:hidden;
+}
+/* header */
+.header-section{text-align:center;margin:30px 0 50px 0}
+.grand-prize{font-family:Teko,Arial;font-size:4.5rem;font-weight:700;background:linear-gradient(to bottom,#FFD700,#ffb300);
+ -webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 20px rgba(255,215,0,0.35))}
+.company-title{font-size:1.6rem;text-transform:uppercase;font-weight:700;letter-spacing:2px;color:#fff;margin-top:8px}
+.day-status{font-size:1rem;color:#aaa;margin-top:8px;background:rgba(255,255,255,0.06);padding:6px 14px;border-radius:20px;display:inline-block}
 
-        .podium-wrap {
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            gap: 25px;
-            height: 420px;
-        }
+/* layout */
+.container{width:90%;max-width:1200px;display:flex;flex-direction:column;gap:48px}
 
-        .podium-card {
-            background: linear-gradient(180deg, rgba(30,30,40,0.9), rgba(10,10,20,0.9));
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 20px;
-            width: 260px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 25px;
-            position: relative;
-            transition: transform .4s ease-out;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-        }
+/* podium */
+.podium-wrap{display:flex;justify-content:center;align-items:flex-end;gap:22px;height:380px}
+.podium-card{background:linear-gradient(180deg,rgba(30,30,40,0.95) 0%, rgba(8,8,12,0.95) 100%);
+  border-radius:18px;padding:22px;width:260px;display:flex;flex-direction:column;align-items:center;position:relative;
+  transition:transform .35s cubic-bezier(.22,.9,.35,1);box-shadow:0 12px 30px rgba(0,0,0,.6);border:1px solid rgba(255,255,255,0.04)}
+.podium-card:hover{transform:translateY(-8px) scale(1.02)}
+.rank-1{height:100%;border-bottom:8px solid var(--gold);order:2;z-index:10}
+.rank-2{height:86%;border-bottom:8px solid var(--silver);order:1}
+.rank-3{height:76%;border-bottom:8px solid var(--bronze);order:3}
 
-        .podium-card:hover { transform: translateY(-10px) scale(1.02); }
+.p-avatar{width:100px;height:100px;border-radius:50%;background:#151515;display:flex;align-items:center;justify-content:center;
+ font-size:2.8rem;font-weight:700;color:#fff;margin-bottom:16px;border:3px solid rgba(255,255,255,0.08);box-shadow:inset 0 0 18px rgba(0,0,0,.5)}
+.rank-1 .p-avatar{border-color:var(--gold);color:var(--gold);box-shadow:0 0 22px rgba(255,215,0,0.28)}
+.rank-2 .p-avatar{border-color:var(--silver);color:var(--silver)}
+.rank-3 .p-avatar{border-color:var(--bronze);color:var(--bronze)}
 
-        .rank-1 { height: 100%; border-bottom: 8px solid var(--gold); order: 2; }
-        .rank-2 { height: 85%; border-bottom: 8px solid var(--silver); order: 1; }
-        .rank-3 { height: 75%; border-bottom: 8px solid var(--bronze); order: 3; }
+.p-name{font-size:1.25rem;font-weight:600;color:#fff;margin-bottom:6px}
+.p-score{font-family:Teko,Arial;font-size:3.8rem;font-weight:700;margin-top:auto}
+.rank-1 .p-score{color:var(--gold)}
+.rank-2 .p-score{color:var(--silver)}
+.rank-3 .p-score{color:var(--bronze)}
 
-        .p-avatar {
-            width: 100px; height: 100px; border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            font-size: 3rem; font-weight: 700;
-            background: #151515;
-            margin-bottom: 20px;
-        }
+/* effects */
+.crown{position:absolute;top:-58px;font-size:3.8rem;animation:crown-pulse 2s ease-in-out infinite alternate}
+@keyframes crown-pulse{from{transform:scale(1);filter:drop-shadow(0 0 14px gold)}to{transform:scale(1.12);filter:drop-shadow(0 0 30px gold)}}
+.pursuit-indicator{position:absolute;top:12px;right:12px;background:linear-gradient(45deg,#C0C0C0,#E0E0E0);color:#000;font-weight:800;padding:5px 10px;border-radius:18px;font-size:.78rem;animation:pursuit-bounce 1s ease-in-out infinite alternate}
+@keyframes pursuit-bounce{from{transform:translateY(0)}to{transform:translateY(-5px)}}
 
-        .rank-1 .p-avatar { border: 3px solid var(--gold); color: var(--gold); }
-        .rank-2 .p-avatar { border: 3px solid var(--silver); color: var(--silver); }
-        .rank-3 .p-avatar { border: 3px solid var(--bronze); color: var(--bronze); }
+/* list grid */
+.list-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.agent-card{background:var(--card-glass);border-radius:12px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-left:4px solid var(--neon-green);transition:all .25s ease;position:relative;overflow:hidden}
+.agent-card:hover{background:rgba(255,255,255,0.06);transform:translateX(6px)}
+.agent-info h3{font-size:1.05rem;font-weight:600;color:#fff}
+.agent-info span{font-size:.88rem;color:#999;font-weight:700}
+.agent-score{font-family:Teko,Arial;font-size:2.6rem;font-weight:700;color:var(--neon-green)}
+.danger-mode{border-left-color:var(--danger-red);background:rgba(40,0,0,0.28);animation:danger-pulse 3s infinite ease-in-out}
+.danger-mode .agent-score{color:var(--danger-red);opacity:.92}
+.danger-mode .agent-info h3{color:#c23b3b}
+@keyframes danger-pulse{0%,100%{opacity:.75}50%{opacity:1;box-shadow:inset 0 0 30px rgba(255,0,0,0.12)}}
 
-        .p-name { font-size: 1.6rem; margin-bottom: 5px; }
-        .p-score {
-            font-family: 'Teko', sans-serif;
-            font-size: 5rem;
-            font-weight: 700;
-            line-height: 1;
-            margin-top: auto;
-        }
-
-        .rank-1 .p-score { color: var(--gold); }
-        .rank-2 .p-score { color: var(--silver); }
-        .rank-3 .p-score { color: var(--bronze); }
-
-        .crown {
-            position: absolute;
-            top: -65px;
-            font-size: 4.5rem;
-            animation: crown-pulse 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes crown-pulse {
-            from { transform: scale(1); filter: drop-shadow(0 0 15px gold); }
-            to { transform: scale(1.15); filter: drop-shadow(0 0 35px gold); }
-        }
-
-        .pursuit-indicator {
-            position: absolute;
-            top: 15px; right: 15px;
-            background: linear-gradient(45deg, #C0C0C0, #E0E0E0);
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-weight: 800;
-            animation: pursuit-bounce 1s ease-in-out infinite alternate;
-        }
-
-        @keyframes pursuit-bounce {
-            from { transform: translateY(0); }
-            to { transform: translateY(-5px); }
-        }
-
-        .list-grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); }
-
-        .agent-card {
-            background: var(--card-glass);
-            border-left: 4px solid var(--neon-green);
-            border-radius: 12px;
-            padding: 20px 25px;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-
-        .danger-mode { border-left-color: var(--danger-red); background: rgba(30,0,0,.3); animation: danger-pulse 3s infinite; }
-        @keyframes danger-pulse { 50% { box-shadow: inset 0 0 30px rgba(255,0,0,.3); } }
-
-    </style>
+/* responsive */
+@media (max-width:850px){
+  .podium-wrap{flex-direction:column;height:auto;align-items:center;gap:18px}
+  .podium-card{width:100%;flex-direction:row;justify-content:space-between;padding:14px;height:auto}
+  .p-avatar{width:70px;height:70px;font-size:1.8rem;margin-bottom:0;margin-right:16px}
+  .p-score{font-size:2.6rem;margin-top:0}
+  .grand-prize{font-size:3rem}
+  .company-title{font-size:1.2rem}
+}
+</style>
 </head>
-
 <body>
 
 <div class="header-section">
-    <div class="grand-prize">1.000 €</div>
-    <div class="company-title">Istadental Satış Yarışması</div>
-    <div class="day-status">5.Gün Güncel Sonuçlar</div>
+  <div class="grand-prize">1.000 €</div>
+  <div class="company-title">Istadental Satış Yarışması</div>
+  <div class="day-status" id="dayStatus">Güncel Sonuçlar</div>
 </div>
 
 <div class="container">
-    <div class="podium-wrap" id="podium"></div>
-    <div class="list-grid" id="grid"></div>
+  <div class="podium-wrap" id="podium"></div>
+  <div class="list-grid" id="grid"></div>
 </div>
 
 <script>
+/* ---------- AYARLAR: buraya Sheet ID ve gid koy ---------- */
+/* Senin verdiğin ID kullanıldı; eğer farklı sheet kullanırsan burayı değiştir */
+const SPREADSHEET_ID = "1hXyM4SdSDD5w7LqlziIO80xdHK_OkHklFuXrBbhYDuU";
+const GID = "0";
 
-async function loadData() {
-    const url = "YOUR_JSON_URL_HERE";  // ← BURAYA RAW JSON.TXT LİNKİNİ KOYUYORSUN
-    const res = await fetch(url);
-    const agents = await res.json();
+/* build endpoint (doğru string formatı önemli) */
+const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}`;
 
-    renderBoard(agents);
+const podiumEl = document.getElementById('podium');
+const gridEl = document.getElementById('grid');
+const dayStatusEl = document.getElementById('dayStatus');
+
+function animateCounter(element, startVal, target) {
+  startVal = Number(startVal) || 0;
+  target = Number(target) || 0;
+  if (!element) return;
+  if (target === 0) { element.innerText = "0"; return; }
+  const duration = 700;
+  const startTime = performance.now();
+  function step(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 4);
+    const value = Math.floor(startVal + ease * (target - startVal));
+    element.innerText = value;
+    if (progress < 1) requestAnimationFrame(step);
+    else element.innerText = target;
+  }
+  requestAnimationFrame(step);
 }
 
-// Animasyonlu sayı
-function animateCounter(el, target) {
-    let start = 0;
-    const duration = 1800;
-    const startTime = performance.now();
-
-    if (target === 0) { el.textContent = 0; return; }
-
-    function update(now) {
-        const progress = Math.min((now - startTime) / duration, 1);
-        const eased = 1 - Math.pow(1 - progress, 4);
-        el.textContent = Math.floor(eased * target);
-        if (progress < 1) requestAnimationFrame(update);
-    }
-
-    requestAnimationFrame(update);
+function parseGviz(responseText) {
+  try {
+    const jsonText = responseText.replace(/^[^\(]*\(/, '').replace(/\);?$/, '');
+    const parsed = JSON.parse(jsonText);
+    const table = parsed.table;
+    const cols = table.cols.map(c => (c && c.label) ? c.label.toString().toLowerCase().trim() : "");
+    const rows = table.rows.map(row => {
+      const obj = {};
+      row.c.forEach((cell, idx) => {
+        const key = cols[idx] || `col${idx}`;
+        obj[key] = cell ? cell.v : null;
+      });
+      return obj;
+    });
+    // normalize expected fields
+    const agents = rows.map(r => {
+      const name = r.name ?? r.isim ?? r.ad ?? r.col0 ?? "";
+      const score = Number(r.score ?? r.puan ?? r.col1 ?? 0) || 0;
+      return { name: String(name).trim(), score: score };
+    }).filter(a => a.name);
+    return agents;
+  } catch (e) {
+    console.error("parseGviz hata:", e, responseText.slice(0,200));
+    return [];
+  }
 }
 
 function renderBoard(agents) {
-    const podium = document.getElementById("podium");
-    const grid = document.getElementById("grid");
+  // sort
+  agents.sort((a,b) => {
+    if (b.score === a.score) return a.name.localeCompare(b.name, 'tr');
+    return b.score - a.score;
+  });
 
-    podium.innerHTML = "";
-    grid.innerHTML = "";
+  podiumEl.innerHTML = "";
+  gridEl.innerHTML = "";
 
-    agents.sort((a,b)=> b.score - a.score);
+  const top3 = agents.slice(0,3);
+  const rest = agents.slice(3);
 
-    // --- PODIUM ---
-    agents.slice(0,3).forEach((a,i)=>{
-        const rank = i+1;
-        const card = document.createElement("div");
-        card.className = `podium-card rank-${rank}`;
+  top3.forEach((agent,i) => {
+    const rank = i+1;
+    const initial = agent.name.charAt(0).toUpperCase() || "?";
+    const crown = rank === 1 ? '<div class="crown">👑</div>' : '';
+    const pursuit = rank === 2 ? '<div class="pursuit-indicator">🔥TAKİPTE!</div>' : '';
+    const card = document.createElement('div');
+    card.className = `podium-card rank-${rank}`;
+    card.innerHTML = `
+      ${crown}
+      ${pursuit}
+      <div style="display:flex;align-items:center;">
+        <div class="p-avatar">${initial}</div>
+        <div style="display:flex;flex-direction:column;align-items:flex-start;margin-left:6px;">
+          <div class="p-name">${agent.name}</div>
+          <!-- boş -->
+        </div>
+      </div>
+      <div style="height:6px;"></div>
+      <div class="p-score" id="p-score-${i}">0</div>
+    `;
+    podiumEl.appendChild(card);
+    // animate after layout
+    setTimeout(()=> animateCounter(document.getElementById(`p-score-${i}`), 0, agent.score), 120 + i*120);
+  });
 
-        card.innerHTML = `
-            ${rank===1 ? `<div class="crown">👑</div>` : ""}
-            ${rank===2 ? `<div class="pursuit-indicator">🔥 TAKİPTE!</div>` : ""}
-            <div class="p-avatar">${a.name[0]}</div>
-            <div class="p-name">${a.name}</div>
-            <div class="p-score" id="p-score-${i}">0</div>
-        `;
+  rest.forEach((agent,i) => {
+    const realRank = i + 4;
+    const dangerClass = agent.score === 0 ? 'danger-mode' : '';
+    const card = document.createElement('div');
+    card.className = `agent-card ${dangerClass}`;
+    card.innerHTML = `
+      <div class="agent-info">
+        <h3>${agent.name}</h3>
+        <span>#${realRank}</span>
+      </div>
+      <div class="agent-score" id="g-score-${i}">0</div>
+    `;
+    gridEl.appendChild(card);
+    setTimeout(()=> animateCounter(document.getElementById(`g-score-${i}`), 0, agent.score), 300 + i*60);
+  });
 
-        podium.appendChild(card);
-
-        setTimeout(()=> {
-            animateCounter(document.getElementById(`p-score-${i}`), a.score);
-        }, 300 + i*200);
-    });
-
-    // --- LİSTE ---
-    agents.slice(3).forEach((a, i)=>{
-        const card = document.createElement("div");
-        const danger = a.score === 0 ? "danger-mode" : "";
-        card.className = `agent-card ${danger}`;
-
-        card.innerHTML = `
-            <div class="agent-info">
-                <h3>${a.name}</h3>
-                <span>#${i+4}</span>
-            </div>
-            <div class="agent-score" id="g-score-${i}">0</div>
-        `;
-
-        grid.appendChild(card);
-
-        setTimeout(()=>{
-            animateCounter(document.getElementById(`g-score-${i}`), a.score);
-        }, 600 + i*120);
-    });
-
-    // Konfeti
-    setTimeout(() => {
-        var end = Date.now() + 1500;
-        (function frame() {
-            confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 } });
-            confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 } });
-            if (Date.now() < end) requestAnimationFrame(frame);
-        })();
-    }, 2000);
+  // küçük konfeti (sadece ilk 1s göster)
+  setTimeout(()=>{
+    const end = Date.now() + 900;
+    const colors = ['#FFD700','#ffffff','#C0C0C0'];
+    (function frame(){
+      confetti({ particleCount:3, angle:60, spread:55, origin:{x:0.1}, colors });
+      confetti({ particleCount:3, angle:120, spread:55, origin:{x:0.9}, colors });
+      if (Date.now() < end) requestAnimationFrame(frame);
+    })();
+  }, 450);
 }
 
-loadData();
+/* fetch + render */
+let lastAgentsJson = null;
+async function fetchAndRender() {
+  try {
+    console.log("Fetching", SHEET_URL);
+    const res = await fetch(SHEET_URL, {cache: "no-store"});
+    if (!res.ok) throw new Error("Sheet yüklenemedi: " + res.status);
+    const txt = await res.text();
+    const agents = parseGviz(txt);
+    // küçük debounce: eğer data değişmemişse sadece skor animasyonlarını güncelle
+    const agentsJson = JSON.stringify(agents);
+    if (lastAgentsJson !== agentsJson) {
+      renderBoard(agents);
+      lastAgentsJson = agentsJson;
+      dayStatusEl.innerText = `Güncellendi: ${new Date().toLocaleTimeString('tr-TR')}`;
+    } else {
+      // değişmemiş; yine de animasyon tazeleme istersen buraya ekleyebilirsin
+      console.log("Veri değişmedi.");
+    }
+  } catch (err) {
+    console.error(err);
+    podiumEl.innerHTML = `<div style="color:#f66;padding:18px;">Veri yüklenemedi. Sheet paylaşım ayarlarını kontrol et.</div>`;
+    gridEl.innerHTML = "";
+    dayStatusEl.innerText = "Veri alınamadı";
+  }
+}
 
-// Sayfa her 10 saniyede bir otomatik yenilenir
-setInterval(loadData, 10000);
-
+/* ilk yükle ve düzenli yenile */
+fetchAndRender();
+setInterval(fetchAndRender, 10000);
 </script>
 
 </body>
