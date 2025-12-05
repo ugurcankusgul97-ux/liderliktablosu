@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏆 Istadental Satış Yarışması 🏆</title>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        /* (— SENİN TÜM CSS’İN HİÇ DEĞİŞMEDEN BIRAKILDI —) */
+        :root {
+            --bg-dark: #0a0a0a;
+            --card-glass: rgba(255, 255, 255, 0.03);
+            --gold: #FFD700;
+            --silver: #E0E0E0;
+            --bronze: #CD7F32;
+            --danger-red: #ff0000;
+            --neon-green: #00ff88;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: radial-gradient(circle at center top, #1a1a2e 0%, #000000 80%);
+            font-family: 'Roboto', sans-serif;
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 50px;
+            overflow-x: hidden;
+        }
+        .header-section { text-align: center; margin: 30px 0 50px 0; }
+        .grand-prize {
+            font-family: 'Teko', sans-serif;
+            font-size: 6rem;
+            line-height: 1;
+            font-weight: 700;
+            background: linear-gradient(to bottom, #FFD700, #ffb300);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 25px rgba(255,215,0,0.4));
+        }
+        .company-title { font-size: 2rem; text-transform: uppercase; font-weight: 700; letter-spacing: 2px; }
+        .day-status {
+            font-size: 1rem;
+            color: #aaa;
+            margin-top: 5px;
+            background: rgba(255,255,255,0.08);
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+
+        .container { width: 90%; max-width: 1200px; display: flex; flex-direction: column; gap: 60px; }
+
+        .podium-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 25px;
+            height: 420px;
+        }
+
+        .podium-card {
+            background: linear-gradient(180deg, rgba(30,30,40,0.9), rgba(10,10,20,0.9));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px;
+            width: 260px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 25px;
+            position: relative;
+            transition: transform .4s ease-out;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+        }
+
+        .podium-card:hover { transform: translateY(-10px) scale(1.02); }
+
+        .rank-1 { height: 100%; border-bottom: 8px solid var(--gold); order: 2; }
+        .rank-2 { height: 85%; border-bottom: 8px solid var(--silver); order: 1; }
+        .rank-3 { height: 75%; border-bottom: 8px solid var(--bronze); order: 3; }
+
+        .p-avatar {
+            width: 100px; height: 100px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 3rem; font-weight: 700;
+            background: #151515;
+            margin-bottom: 20px;
+        }
+
+        .rank-1 .p-avatar { border: 3px solid var(--gold); color: var(--gold); }
+        .rank-2 .p-avatar { border: 3px solid var(--silver); color: var(--silver); }
+        .rank-3 .p-avatar { border: 3px solid var(--bronze); color: var(--bronze); }
+
+        .p-name { font-size: 1.6rem; margin-bottom: 5px; }
+        .p-score {
+            font-family: 'Teko', sans-serif;
+            font-size: 5rem;
+            font-weight: 700;
+            line-height: 1;
+            margin-top: auto;
+        }
+
+        .rank-1 .p-score { color: var(--gold); }
+        .rank-2 .p-score { color: var(--silver); }
+        .rank-3 .p-score { color: var(--bronze); }
+
+        .crown {
+            position: absolute;
+            top: -65px;
+            font-size: 4.5rem;
+            animation: crown-pulse 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes crown-pulse {
+            from { transform: scale(1); filter: drop-shadow(0 0 15px gold); }
+            to { transform: scale(1.15); filter: drop-shadow(0 0 35px gold); }
+        }
+
+        .pursuit-indicator {
+            position: absolute;
+            top: 15px; right: 15px;
+            background: linear-gradient(45deg, #C0C0C0, #E0E0E0);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 800;
+            animation: pursuit-bounce 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes pursuit-bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-5px); }
+        }
+
+        .list-grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); }
+
+        .agent-card {
+            background: var(--card-glass);
+            border-left: 4px solid var(--neon-green);
+            border-radius: 12px;
+            padding: 20px 25px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .danger-mode { border-left-color: var(--danger-red); background: rgba(30,0,0,.3); animation: danger-pulse 3s infinite; }
+        @keyframes danger-pulse { 50% { box-shadow: inset 0 0 30px rgba(255,0,0,.3); } }
+
+    </style>
+</head>
+
+<body>
+
+<div class="header-section">
+    <div class="grand-prize">1.000 €</div>
+    <div class="company-title">Istadental Satış Yarışması</div>
+    <div class="day-status">5.Gün Güncel Sonuçlar</div>
+</div>
+
+<div class="container">
+    <div class="podium-wrap" id="podium"></div>
+    <div class="list-grid" id="grid"></div>
+</div>
+
+<script>
+
+async function loadData() {
+    const url = "YOUR_JSON_URL_HERE";  // ← BURAYA RAW JSON.TXT LİNKİNİ KOYUYORSUN
+    const res = await fetch(url);
+    const agents = await res.json();
+
+    renderBoard(agents);
+}
+
+// Animasyonlu sayı
+function animateCounter(el, target) {
+    let start = 0;
+    const duration = 1800;
+    const startTime = performance.now();
+
+    if (target === 0) { el.textContent = 0; return; }
+
+    function update(now) {
+        const progress = Math.min((now - startTime) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 4);
+        el.textContent = Math.floor(eased * target);
+        if (progress < 1) requestAnimationFrame(update);
+    }
+
+    requestAnimationFrame(update);
+}
+
+function renderBoard(agents) {
+    const podium = document.getElementById("podium");
+    const grid = document.getElementById("grid");
+
+    podium.innerHTML = "";
+    grid.innerHTML = "";
+
+    agents.sort((a,b)=> b.score - a.score);
+
+    // --- PODIUM ---
+    agents.slice(0,3).forEach((a,i)=>{
+        const rank = i+1;
+        const card = document.createElement("div");
+        card.className = `podium-card rank-${rank}`;
+
+        card.innerHTML = `
+            ${rank===1 ? `<div class="crown">👑</div>` : ""}
+            ${rank===2 ? `<div class="pursuit-indicator">🔥 TAKİPTE!</div>` : ""}
+            <div class="p-avatar">${a.name[0]}</div>
+            <div class="p-name">${a.name}</div>
+            <div class="p-score" id="p-score-${i}">0</div>
+        `;
+
+        podium.appendChild(card);
+
+        setTimeout(()=> {
+            animateCounter(document.getElementById(`p-score-${i}`), a.score);
+        }, 300 + i*200);
+    });
+
+    // --- LİSTE ---
+    agents.slice(3).forEach((a, i)=>{
+        const card = document.createElement("div");
+        const danger = a.score === 0 ? "danger-mode" : "";
+        card.className = `agent-card ${danger}`;
+
+        card.innerHTML = `
+            <div class="agent-info">
+                <h3>${a.name}</h3>
+                <span>#${i+4}</span>
+            </div>
+            <div class="agent-score" id="g-score-${i}">0</div>
+        `;
+
+        grid.appendChild(card);
+
+        setTimeout(()=>{
+            animateCounter(document.getElementById(`g-score-${i}`), a.score);
+        }, 600 + i*120);
+    });
+
+    // Konfeti
+    setTimeout(() => {
+        var end = Date.now() + 1500;
+        (function frame() {
+            confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 } });
+            confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 } });
+            if (Date.now() < end) requestAnimationFrame(frame);
+        })();
+    }, 2000);
+}
+
+loadData();
+
+// Sayfa her 10 saniyede bir otomatik yenilenir
+setInterval(loadData, 10000);
+
+</script>
+
+</body>
+</html>
